@@ -1,0 +1,1 @@
+"""Erreurs communes de l'API"""
