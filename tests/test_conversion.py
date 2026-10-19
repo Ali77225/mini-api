@@ -1,7 +1,6 @@
 import pytest
-from app.outils.conversion import celsius_fahrenheit
 from app.erreurs import ConversionErreur
-
+from app.outils.conversion import celsius_fahrenheit
 
 def test_celsius_fahrenheit_normal():
     assert celsius_fahrenheit(0.0) == 32.0
