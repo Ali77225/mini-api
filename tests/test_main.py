@@ -33,3 +33,22 @@ def test_route_factorielle_mauvais_type():
     assert r.status_code == 422
 
 
+def test_route_est_premier_de_3():
+    r = client.get("/est_premier/3")
+    assert r.status_code == 200
+    assert r.json()["resultat"] is True
+
+def test_route_est_premier_de_8():
+    r = client.get("/est_premier/8")
+    assert r.status_code == 200
+    assert r.json()["resultat"] is False
+
+def test_route_est_premier_nombre_negatif():
+    r = client.get("/est_premier/-3")
+    assert r.status_code == 200
+    assert r.json()["resultat"] is False
+
+def test_route_est_premier_mauvais_type():
+    r = client.get("/est_premier/abc")
+    assert r.status_code == 422
+
