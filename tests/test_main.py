@@ -1,8 +1,24 @@
+import pytest
 from fastapi.testclient import TestClient
 
+from app.erreurs import ConversionErreur
 from app.main import app
+from app.outils.conversion import km_miles
 
 client = TestClient(app)
+
+
+def test_km_miles_normal():
+    assert km_miles(10.0) == 6.2137
+
+
+def test_km_miles_limite():
+    assert km_miles(0.0) == 0.0
+
+
+def test_km_miles_erreur():
+    with pytest.raises(ConversionErreur):
+        km_miles(-5.0)
 
 
 def test_sante():
