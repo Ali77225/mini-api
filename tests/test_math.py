@@ -1,7 +1,7 @@
 import pytest
 
 from app.erreurs import LIMITE_FACTORIELLE
-from app.outils.math import est_premier, factorielle
+from app.outils.math import est_premier, factorielle, pgcd
 
 
 def test_factorielle_de_5():
@@ -44,5 +44,25 @@ def test_est_premier_carre():
     assert not est_premier(9)
 
 
+def test_pgcd_normal():
+    assert pgcd(22,16) == 2
 
+def test_pgcd_premier_entre_eux():
+    assert pgcd(8,9) == 1
 
+def test_pgcd_ordre_inverse():
+    assert pgcd(16,22) == 2
+
+def test_pgcd_limite_1():
+    assert pgcd(7,0) == 7
+
+def test_pgcd_normal_limite_2():
+    assert pgcd(0,9) == 9
+
+def test_pgcd_normal_negatif():
+    assert pgcd(-22,16) == 2
+    assert pgcd(22,-16) == 2
+
+def test_pgcd_erreur():
+    with pytest.raises(ValueError):
+        pgcd(0,0) 
