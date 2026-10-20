@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from app.erreurs import MetierException
-from app.outils.conversion import celsius_fahrenheit
+from app.outils.conversion import celsius_fahrenheit, euros_devise
 
 app = FastAPI(title="Mini API")
 
@@ -21,3 +21,9 @@ def sante():
 def route_celsius_fahrenheit(celsius: float):
     resultat = celsius_fahrenheit(celsius)
     return {"celsius": celsius, "fahrenheit": resultat}
+
+
+@app.get("/euros-devise")
+def route_euros_devise(euros: float, devise: str):
+    resultat = euros_devise(euros, devise)
+    return {"euros": euros, "devise": devise, "montant_converti": resultat}

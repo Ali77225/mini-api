@@ -42,3 +42,25 @@ def test_conversion_temperature_inferieure_au_zero_absolu():
 def test_conversion_type_invalide():
     r = client.get("/celsius-fahrenheit", params={"celsius": "pas-un-nombre"})
     assert r.status_code == 422
+
+
+def test_conversion_euros_devise():
+    r = client.get("/euros-devise", params={"euros": 100, "devise": "USD"})
+    assert r.status_code == 200
+    assert r.json() == {
+        "euros": 100.0,
+        "devise": "USD",
+        "montant_converti": 108.0,
+    }
+
+
+def test_conversion_euros_devise_montant_negatif():
+    r = client.get("/euros-devise", params={"euros": -10, "devise": "USD"})
+    assert r.status_code == 400
+    assert "négatif" in r.json()["detail"]
+
+
+def test_conversion_euros_devise_inconnue():
+    r = client.get("/euros-devise", params={"euros": 50, "devise": "INCONNUE"})
+    assert r.status_code == 400
+    assert "Devise inconnue" in r.json()["detail"]
