@@ -5,7 +5,7 @@ class MetierException(Exception):
     pass
 
 
-class ConversionErreur(ValueError, MetierException):
+class ConversionErreur(MetierException):
     pass
 
 
