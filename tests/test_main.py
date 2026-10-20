@@ -4,6 +4,7 @@ from app.erreurs import (
     DEPASSEMENT_DE_LIMITE_MATH,
     LIMITE_FACTORIELLE,
     NOMBRE_NEGATIF_MATH,
+    PGCD_INDEFINI_MATH,
 )
 from app.main import app
 
@@ -52,3 +53,27 @@ def test_route_est_premier_mauvais_type():
     r = client.get("/est_premier/abc")
     assert r.status_code == 422
 
+
+def test_route_pgcd_normal():
+    r = client.get("/pgcd/22/16")
+    assert r.status_code == 200
+    assert r.json()["resultat"] == 2
+
+def test_route_pgcd_negatif():
+    r = client.get("/pgcd/-22/16")
+    assert r.status_code == 200
+    assert r.json()["resultat"] == 2
+
+def test_route_pgcd_b_nul():
+    r = client.get("/pgcd/7/0")
+    assert r.status_code == 200
+    assert r.json()["resultat"] == 7
+
+def test_route_pgcd_indéfinis():
+    r = client.get("/pgcd/0/0")
+    assert r.status_code == 400
+    assert r.json()["detail"] == PGCD_INDEFINI_MATH
+
+def test_route_pgcd_mauvais_type():
+    r = client.get("/pgcd/abc/16")
+    assert r.status_code == 422
