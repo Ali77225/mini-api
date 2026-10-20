@@ -18,6 +18,11 @@ def test_conversion_celsius_fahrenheit():
 
 
 def test_conversion_temperature_inferieure_au_zero_absolu():
-    r = client.get("/celsius-fahrenheit", params={"celsius": -300})
+    r = client.get("/celsius-fahrenheit", params={"celsius": -273.16})
     assert r.status_code == 400
     assert "zéro absolu" in r.json()["detail"]
+
+
+def test_conversion_type_invalide():
+    r = client.get("/celsius-fahrenheit", params={"celsius": "pas-un-nombre"})
+    assert r.status_code == 422
