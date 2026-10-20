@@ -4,6 +4,7 @@ from app.erreurs import (
     DEPASSEMENT_DE_LIMITE_MATH,
     LIMITE_FACTORIELLE,
     NOMBRE_NEGATIF_MATH,
+    PGCD_INDEFINI_MATH,
 )
 
 
@@ -24,3 +25,13 @@ def est_premier(n: int) -> bool:
             return False
         d += 1
     return True
+
+
+def pgcd(a: int, b: int) -> int:
+    if a == 0 and b == 0:
+        raise ValueError(PGCD_INDEFINI_MATH)
+    a, b = abs(a), abs(b)
+    while b != 0:
+        a, b = b, a%b
+    return a
+    
