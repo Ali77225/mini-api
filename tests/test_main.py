@@ -39,6 +39,18 @@ def test_conversion_temperature_inferieure_au_zero_absolu():
     assert "zéro absolu" in r.json()["detail"]
 
 
+def test_conversion_km_miles():
+    r = client.get("/km-miles", params={"kilometres": 10})
+    assert r.status_code == 200
+    assert r.json() == {"kilometres": 10.0, "miles": 6.2137}
+
+
+def test_conversion_km_miles_distance_negative():
+    r = client.get("/km-miles", params={"kilometres": -5})
+    assert r.status_code == 400
+    assert "distance ne peut pas être négative" in r.json()["detail"]
+
+
 def test_conversion_type_invalide():
     r = client.get("/celsius-fahrenheit", params={"celsius": "pas-un-nombre"})
     assert r.status_code == 422
