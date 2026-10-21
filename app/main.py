@@ -1,35 +1,46 @@
+"""Point d'entrée de l'API FastAPI."""
+
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from app.erreurs import MetierException
-from app.outils.conversion import celsius_fahrenheit, euros_devise, km_miles
+from app.outils import math
+from app.outils.conversion import celsius_fahrenheit
 
-app = FastAPI(title="Mini API")
+app = FastAPI(title="Mini-API")
 
 
 @app.exception_handler(MetierException)
-async def gerer_erreur_metier(request: Request, exc: MetierException) -> JSONResponse:
-    return JSONResponse(status_code=400, content={"detail": str(exc)})
+@app.exception_handler(ValueError)
+def metier_exception_handler(_request: Request, exc: MetierException):
+    return JSONResponse(status_code=400, content={"message": str(exc)})
+
+
+@app.get("/")
+def route_racine():
+    return {"message": "Bienvenue sur l'API"}
 
 
 @app.get("/sante")
-def sante():
+def route_sante():
     return {"statut": "ok"}
+
+
+@app.get("/math/factorielle")
+def route_factorielle(n: int):
+    return {"n": n, "resultat": math.factorielle(n)}
+
+
+@app.get("/math/est-premier")
+def route_est_premier(n: int):
+    return {"n": n, "resultat": math.est_premier(n)}
+
+
+@app.get("/math/pgcd")
+def route_pgcd(a: int, b: int):
+    return {"a": a, "b": b, "resultat": math.pgcd(a, b)}
 
 
 @app.get("/celsius-fahrenheit")
 def route_celsius_fahrenheit(celsius: float):
-    resultat = celsius_fahrenheit(celsius)
-    return {"celsius": celsius, "fahrenheit": resultat}
-
-
-@app.get("/euros-devise")
-def route_euros_devise(euros: float, devise: str):
-    resultat = euros_devise(euros, devise)
-    return {"euros": euros, "devise": devise, "montant_converti": resultat}
-
-
-@app.get("/km-miles")
-def route_km_miles(kilometres: float):
-    resultat = km_miles(kilometres)
-    return {"kilometres": kilometres, "miles": resultat}
+    return {"celsius": celsius, "fahrenheit": celsius_fahrenheit(celsius)}
