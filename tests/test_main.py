@@ -14,7 +14,7 @@ def test_racine():
 
 
 def test_sante():
-    reponse = client.get("/sante")
+    reponse = client.get("/sante/")
     assert reponse.status_code == 200
     assert reponse.json() == {"statut": "ok"}
 

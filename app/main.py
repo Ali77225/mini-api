@@ -20,12 +20,11 @@ def route_racine():
     return {"message": "Bienvenue sur l'API"}
 
 
-@app.get("/sante")
+@app.get("/sante/")
 def route_sante():
     return {"statut": "ok"}
 
-
-# Routes d'Ali (conservées telles qu'il les a conçues)
+# --- Routes d'Ali (intactes) ---
 @app.get("/factorielle/{n}")
 def route_factorielle(n: int):
     try:
@@ -46,8 +45,7 @@ def route_pgcd(a: int, b: int):
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-
-# Ta route Celsius
+# --- Ma route de conversion Celsius ---
 @app.get("/celsius-fahrenheit")
 def route_celsius_fahrenheit(celsius: float):
     return {"celsius": celsius, "fahrenheit": celsius_fahrenheit(celsius)}
