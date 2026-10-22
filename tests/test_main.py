@@ -20,35 +20,35 @@ def test_sante():
 
 
 def test_route_factorielle_succes():
-    reponse = client.get("/math/factorielle?n=5")
+    reponse = client.get("/factorielle/5")
     assert reponse.status_code == 200
     assert reponse.json() == {"n": 5, "resultat": 120}
 
 
 def test_route_factorielle_erreur():
-    reponse = client.get("/math/factorielle?n=-1")
+    reponse = client.get("/factorielle/-1")
     assert reponse.status_code == 400
 
 
 def test_route_factorielle_invalide():
-    reponse = client.get("/math/factorielle?n=abc")
+    reponse = client.get("/factorielle/abc")
     assert reponse.status_code == 422
 
 
 def test_route_est_premier():
-    reponse = client.get("/math/est-premier?n=7")
+    reponse = client.get("/est_premier/7")
     assert reponse.status_code == 200
     assert reponse.json() == {"n": 7, "resultat": True}
 
 
 def test_route_pgcd_succes():
-    reponse = client.get("/math/pgcd?a=48&b=18")
+    reponse = client.get("/pgcd/48/18")
     assert reponse.status_code == 200
     assert reponse.json() == {"a": 48, "b": 18, "resultat": 6}
 
 
 def test_route_pgcd_invalide():
-    reponse = client.get("/math/pgcd?a=abc&b=18")
+    reponse = client.get("/pgcd/abc/18")
     assert reponse.status_code == 422
 
 
