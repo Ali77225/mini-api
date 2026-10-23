@@ -4,9 +4,8 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 
 from app.erreurs import MetierException
-from app.outils.conversion import celsius_fahrenheit
-from app.outils.math import est_premier, factorielle, pgcd
 from app.outils.conversion import celsius_fahrenheit, km_mile
+from app.outils.math import est_premier, factorielle, pgcd
 
 app = FastAPI(title="Mini-API")
 
