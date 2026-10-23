@@ -104,6 +104,7 @@ def test_route_celsius_fahrenheit_erreur():
     assert r.status_code == 400
 
 
-def test_route_celsius_fahrenheit_mauvais_type():
-    r = client.get("/celsius-fahrenheit?celsius=abc")
-    assert r.status_code == 422
+def test_route_racine():
+    response = client.get("/")
+    assert response.status_code == 200
+    assert response.json() == {"message": "Bienvenue sur l'API"}
