@@ -1,14 +1,4 @@
-"""Erreurs communes de l'API"""
-
-"""Exceptions personnalisées de l'API."""
-
-
-class MetierException(Exception):
-    """Exception de base pour les erreurs métier."""
-
-
-class MathErreur(MetierException):
-    """Erreur levée lors d'un calcul mathématique invalide."""
+"""Erreurs communes de l'API."""
 
 
 class ConversionErreur(ValueError):
@@ -22,4 +12,3 @@ NOMBRE_NEGATIF_MATH = "Entrée négative, veuillez entrer un nombre positif"
 LIMITE_FACTORIELLE = 800
 DEPASSEMENT_DE_LIMITE_MATH = f"Limite dépassée, veuillez entrer un nombre <= {LIMITE_FACTORIELLE}"
 PGCD_INDEFINI_MATH = "Le pgcd(0,0) n'existe pas"
-

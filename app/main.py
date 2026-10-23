@@ -1,20 +1,12 @@
 """Point d'entrée de l'API FastAPI."""
+"""Point d'entrée de l'API FastAPI."""
 
-from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, HTTPException
 
-from app.erreurs import MetierException
 from app.outils.conversion import celsius_fahrenheit, km_mile
 from app.outils.math import est_premier, factorielle, pgcd
 
 app = FastAPI(title="Mini-API")
-
-
-@app.exception_handler(MetierException)
-def metier_exception_handler(_request: Request, exc: MetierException):
-    return JSONResponse(status_code=400, content={"message": str(exc)})
-
-
 @app.get("/")
 def route_racine():
     return {"message": "Bienvenue sur l'API"}
