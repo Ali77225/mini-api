@@ -11,6 +11,7 @@ def celsius_fahrenheit(celsius: float) -> float:
         )
     return round((celsius * 9 / 5) + 32, 2)
 
+
 def km_mile(km: float) -> float:
     """Convertit des kilomètres en miles."""
     if km < 0:
