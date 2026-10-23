@@ -6,7 +6,10 @@ class ConversionErreur(ValueError):
 
 
 ZERO_ABSOLU_CELSIUS = -273.15
-
+TEMPERATURE_IMPOSSIBLE_CONVERSION = (
+    f"Température impossible, veuillez entrer une valeur >= {ZERO_ABSOLU_CELSIUS}"
+)
+DISTANCE_NEGATIVE_CONVERSION = "Distance négative, veuillez entrer une distance positive"
 # Module math
 NOMBRE_NEGATIF_MATH = "Entrée négative, veuillez entrer un nombre positif"
 LIMITE_FACTORIELLE = 800
