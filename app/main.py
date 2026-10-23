@@ -7,7 +7,7 @@ from fastapi import FastAPI, HTTPException
 from app.outils.conversion import celsius_fahrenheit, km_mile
 from app.outils.math import est_premier, factorielle, pgcd
 
-app = FastAPI(title="Mini-API")
+app = FastAPI(title="Mini API")
 
 
 @app.get("/")
