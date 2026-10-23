@@ -11,7 +11,7 @@ class MathErreur(MetierException):
     """Erreur levée lors d'un calcul mathématique invalide."""
 
 
-class ConversionErreur(MetierException):
+class ConversionErreur(ValueError):
     """Erreur levée lors d'une conversion invalide."""
 
 
