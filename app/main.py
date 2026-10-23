@@ -24,6 +24,7 @@ def route_racine():
 def route_sante():
     return {"statut": "ok"}
 
+
 # --- Routes d'Ali (intactes) ---
 @app.get("/factorielle/{n}")
 def route_factorielle(n: int):
@@ -45,10 +46,12 @@ def route_pgcd(a: int, b: int):
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+
 # --- Ma route de conversion Celsius ---
 @app.get("/celsius-fahrenheit")
 def route_celsius_fahrenheit(celsius: float):
     return {"celsius": celsius, "fahrenheit": celsius_fahrenheit(celsius)}
+
 
 @app.get("/km-mile")
 def route_km_mile(km: float):

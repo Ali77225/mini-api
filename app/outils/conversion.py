@@ -3,7 +3,6 @@
 from app.erreurs import ZERO_ABSOLU_CELSIUS, ConversionErreur
 
 
-
 def celsius_fahrenheit(celsius: float) -> float:
     """Convertit des degrés Celsius en degrés Fahrenheit."""
     if celsius < ZERO_ABSOLU_CELSIUS:
