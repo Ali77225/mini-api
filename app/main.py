@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 from app.erreurs import MetierException
 from app.outils.conversion import celsius_fahrenheit
 from app.outils.math import est_premier, factorielle, pgcd
+from app.outils.conversion import celsius_fahrenheit, km_mile
 
 app = FastAPI(title="Mini-API")
 
@@ -49,3 +50,7 @@ def route_pgcd(a: int, b: int):
 @app.get("/celsius-fahrenheit")
 def route_celsius_fahrenheit(celsius: float):
     return {"celsius": celsius, "fahrenheit": celsius_fahrenheit(celsius)}
+
+@app.get("/km-mile")
+def route_km_mile(km: float):
+    return {"km": km, "miles": km_mile(km)}
