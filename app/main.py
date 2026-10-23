@@ -1,21 +1,36 @@
-from fastapi import FastAPI, HTTPException
+"""Point d'entrée de l'API FastAPI."""
 
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import JSONResponse
+
+from app.erreurs import MetierException
+from app.outils.conversion import celsius_fahrenheit
 from app.outils.math import est_premier, factorielle, pgcd
 
-app = FastAPI(title="Mini API")
+app = FastAPI(title="Mini-API")
+
+
+@app.exception_handler(MetierException)
+def metier_exception_handler(_request: Request, exc: MetierException):
+    return JSONResponse(status_code=400, content={"message": str(exc)})
+
+
+@app.get("/")
+def route_racine():
+    return {"message": "Bienvenue sur l'API"}
 
 
 @app.get("/sante/")
 def route_sante():
     return {"statut": "ok"}
 
-
+# --- Routes d'Ali (intactes) ---
 @app.get("/factorielle/{n}")
 def route_factorielle(n: int):
     try:
         return {"n": n, "resultat": factorielle(n)}
     except ValueError as e:
-        raise HTTPException(400, detail=str(e))
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @app.get("/est_premier/{n}")
@@ -24,8 +39,13 @@ def route_est_premier(n: int):
 
 
 @app.get("/pgcd/{a}/{b}")
-def route_pgcd(a: int, b:int):
+def route_pgcd(a: int, b: int):
     try:
-        return {"a": a, "b": b, "resultat": pgcd(a,b)}
+        return {"a": a, "b": b, "resultat": pgcd(a, b)}
     except ValueError as e:
-        raise HTTPException(400, detail=str(e))
+        raise HTTPException(status_code=400, detail=str(e))
+
+# --- Ma route de conversion Celsius ---
+@app.get("/celsius-fahrenheit")
+def route_celsius_fahrenheit(celsius: float):
+    return {"celsius": celsius, "fahrenheit": celsius_fahrenheit(celsius)}
