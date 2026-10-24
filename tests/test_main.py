@@ -124,3 +124,29 @@ def test_route_km_mile_erreur():
 def test_route_km_mile_mauvais_type():
     r = client.get("/km-mile?km=abc")
     assert r.status_code == 422
+
+
+
+
+# Tests de la route est_palindrome
+def test_route_est_palindrome_vrai():
+    r = client.get("/est_palindrome", params={"texte": "Ésope reste ici et se repose"})
+    assert r.status_code == 200
+    assert r.json() == {"texte": "Ésope reste ici et se repose", "resultat": True}
+
+
+def test_route_est_palindrome_faux():
+    r = client.get("/est_palindrome", params={"texte": "bonjour"})
+    assert r.status_code == 200
+    assert r.json() == {"texte": "bonjour", "resultat": False}
+
+
+def test_route_est_palindrome_texte_vide():
+    r = client.get("/est_palindrome", params={"texte": ""})
+    assert r.status_code == 200
+    assert r.json()["resultat"] is True
+
+
+def test_route_est_palindrome_texte_absent():
+    r = client.get("/est_palindrome")
+    assert r.status_code == 422
