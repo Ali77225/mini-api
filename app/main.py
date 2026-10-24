@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 from app.erreurs import MetierException
 from app.outils.conversion import celsius_fahrenheit, km_mile
 from app.outils.math import est_premier, factorielle, pgcd
-from app.outils.texte import compter_voyelles, est_palindrome
+from app.outils.texte import compter_voyelles, est_palindrome, inverser
 
 app = FastAPI(title="Mini-API")
 
@@ -65,3 +65,8 @@ def route_est_palindrome(texte: str):
 @app.get("/compter_voyelles")
 def route_compter_voyelles(texte: str):
     return {"texte": texte, "resultat": compter_voyelles(texte)}
+
+
+@app.get("/inverser")
+def route_inverser(texte: str):
+    return {"texte": texte, "resultat": inverser(texte)}

@@ -16,7 +16,7 @@ def test_sante():
     assert r.status_code == 200
     assert r.json() == {"statut": "ok"}
 
-
+# Tests de la route factorielle
 def test_route_factorielle_de_5():
     r = client.get(f"/factorielle/{5}")
     assert r.status_code == 200
@@ -40,6 +40,7 @@ def test_route_factorielle_mauvais_type():
     assert r.status_code == 422
 
 
+# Tests de la route est_premier
 def test_route_est_premier_de_3():
     r = client.get("/est_premier/3")
     assert r.status_code == 200
@@ -63,6 +64,7 @@ def test_route_est_premier_mauvais_type():
     assert r.status_code == 422
 
 
+# Tests de la route pgcd
 def test_route_pgcd_normal():
     r = client.get("/pgcd/22/16")
     assert r.status_code == 200
@@ -126,8 +128,6 @@ def test_route_km_mile_mauvais_type():
     assert r.status_code == 422
 
 
-
-
 # Tests de la route est_palindrome
 def test_route_est_palindrome_vrai():
     r = client.get("/est_palindrome", params={"texte": "Ésope reste ici et se repose"})
@@ -168,4 +168,22 @@ def test_route_compter_voyelles_texte_vide():
 
 def test_route_compter_voyelles_texte_absent():
     r = client.get("/compter_voyelles")
+    assert r.status_code == 422
+
+
+# Tests de la route inverser
+def test_route_inverser():
+    r = client.get("/inverser", params={"texte": "Bonjour le monde"})
+    assert r.status_code == 200
+    assert r.json() == {"texte": "Bonjour le monde", "resultat": "ednom el ruojnoB"}
+
+
+def test_route_inverser_texte_vide():
+    r = client.get("/inverser", params={"texte": ""})
+    assert r.status_code == 200
+    assert r.json()["resultat"] == ""
+
+
+def test_route_inverser_texte_absent():
+    r = client.get("/inverser")
     assert r.status_code == 422
