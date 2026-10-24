@@ -1,4 +1,4 @@
-from app.outils.texte import compter_voyelles, est_palindrome
+from app.outils.texte import compter_voyelles, est_palindrome, inverser
 
 
 def test_est_palindrome_mot():
@@ -70,3 +70,34 @@ def test_compter_voyelles_majuscules():
 
 def test_compter_voyelles_chiffres_et_ponctuation():
     assert compter_voyelles("123 !?") == 0
+
+
+
+# inverser : cas normaux
+def test_inverser_mot():
+    assert inverser("bonjour") == "ruojnob"
+
+
+def test_inverser_phrase():
+    assert inverser("Bonjour le monde") == "ednom el ruojnoB"
+
+
+def test_inverser_accents_et_majuscules():
+    assert inverser("Été") == "étÉ"
+
+
+# inverser : cas limites
+def test_inverser_texte_vide():
+    assert inverser("") == ""
+
+
+def test_inverser_une_lettre():
+    assert inverser("a") == "a"
+
+
+def test_inverser_palindrome():
+    assert inverser("kayak") == "kayak"
+
+
+def test_inverser_chiffres_et_ponctuation():
+    assert inverser("123 !?") == "?! 321"
