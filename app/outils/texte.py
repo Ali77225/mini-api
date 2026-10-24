@@ -9,3 +9,15 @@ def est_palindrome(texte: str) -> bool:
         if caractere.isalnum():
             nettoye += caractere
     return nettoye == nettoye[::-1]
+
+
+
+
+def compter_voyelles(texte: str) -> int:
+    minuscules = texte.lower()
+    decompose = unicodedata.normalize("NFD", minuscules)
+    nombre = 0
+    for caractere in decompose:
+        if caractere in "aeiouy":
+            nombre += 1
+    return nombre
