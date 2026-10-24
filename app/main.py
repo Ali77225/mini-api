@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 from app.erreurs import MetierException
 from app.outils.conversion import celsius_fahrenheit, km_mile
 from app.outils.math import est_premier, factorielle, pgcd
+from app.outils.texte import est_palindrome
 
 app = FastAPI(title="Mini-API")
 
@@ -25,7 +26,6 @@ def route_sante():
     return {"statut": "ok"}
 
 
-# --- Routes d'Ali (intactes) ---
 @app.get("/factorielle/{n}")
 def route_factorielle(n: int):
     try:
@@ -47,7 +47,6 @@ def route_pgcd(a: int, b: int):
         raise HTTPException(status_code=400, detail=str(e))
 
 
-# --- Ma route de conversion Celsius ---
 @app.get("/celsius-fahrenheit")
 def route_celsius_fahrenheit(celsius: float):
     return {"celsius": celsius, "fahrenheit": celsius_fahrenheit(celsius)}
@@ -56,3 +55,8 @@ def route_celsius_fahrenheit(celsius: float):
 @app.get("/km-mile")
 def route_km_mile(km: float):
     return {"km": km, "miles": km_mile(km)}
+
+
+@app.get("/est_palindrome")
+def route_est_palindrome(texte: str):
+    return {"texte": texte, "resultat": est_palindrome(texte)}
