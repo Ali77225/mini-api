@@ -107,3 +107,20 @@ def test_route_celsius_fahrenheit_erreur():
 def test_route_celsius_fahrenheit_mauvais_type():
     r = client.get("/celsius-fahrenheit?celsius=abc")
     assert r.status_code == 422
+
+
+# Tests de la route km-mile
+def test_route_km_mile_succes():
+    r = client.get("/km-mile?km=10")
+    assert r.status_code == 200
+    assert r.json() == {"km": 10.0, "miles": 6.21}
+
+
+def test_route_km_mile_erreur():
+    r = client.get("/km-mile?km=-5")
+    assert r.status_code == 400
+
+
+def test_route_km_mile_mauvais_type():
+    r = client.get("/km-mile?km=abc")
+    assert r.status_code == 422

@@ -13,15 +13,15 @@ def factorielle(n: int) -> int:
         raise ValueError(NOMBRE_NEGATIF_MATH)
     if n > LIMITE_FACTORIELLE:
         raise ValueError(DEPASSEMENT_DE_LIMITE_MATH)
-    return 1 if n <= 1 else n * factorielle(n - 1) 
+    return 1 if n <= 1 else n * factorielle(n - 1)
 
 
 def est_premier(n: int) -> bool:
-    if n <= 1 :
+    if n <= 1:
         return False
     d = 2
-    while d * d <= n :
-        if n % d == 0 :
+    while d * d <= n:
+        if n % d == 0:
             return False
         d += 1
     return True
@@ -32,6 +32,5 @@ def pgcd(a: int, b: int) -> int:
         raise ValueError(PGCD_INDEFINI_MATH)
     a, b = abs(a), abs(b)
     while b != 0:
-        a, b = b, a%b
+        a, b = b, a % b
     return a
-    
