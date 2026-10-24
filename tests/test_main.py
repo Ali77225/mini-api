@@ -150,3 +150,22 @@ def test_route_est_palindrome_texte_vide():
 def test_route_est_palindrome_texte_absent():
     r = client.get("/est_palindrome")
     assert r.status_code == 422
+
+
+
+# Tests de la route compter_voyelles
+def test_route_compter_voyelles():
+    r = client.get("/compter_voyelles", params={"texte": "Bonjour le monde"})
+    assert r.status_code == 200
+    assert r.json() == {"texte": "Bonjour le monde", "resultat": 6}
+
+
+def test_route_compter_voyelles_texte_vide():
+    r = client.get("/compter_voyelles", params={"texte": ""})
+    assert r.status_code == 200
+    assert r.json()["resultat"] == 0
+
+
+def test_route_compter_voyelles_texte_absent():
+    r = client.get("/compter_voyelles")
+    assert r.status_code == 422
