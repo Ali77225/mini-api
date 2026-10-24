@@ -1,4 +1,4 @@
-from app.outils.texte import est_palindrome
+from app.outils.texte import compter_voyelles, est_palindrome
 
 
 def test_est_palindrome_mot():
@@ -35,3 +35,38 @@ def test_est_palindrome_texte_vide():
 
 def test_est_palindrome_que_de_la_ponctuation():
     assert est_palindrome("???") is True
+
+
+
+
+def test_compter_voyelles_mot():
+    assert compter_voyelles("bonjour") == 3
+
+
+def test_compter_voyelles_avec_y():
+    assert compter_voyelles("Python") == 2
+
+
+def test_compter_voyelles_accents():
+    assert compter_voyelles("Élève") == 3
+
+
+def test_compter_voyelles_phrase():
+    assert compter_voyelles("Bonjour le monde") == 6
+
+
+# compter_voyelles : cas limites
+def test_compter_voyelles_texte_vide():
+    assert compter_voyelles("") == 0
+
+
+def test_compter_voyelles_sans_voyelle():
+    assert compter_voyelles("bcdfg") == 0
+
+
+def test_compter_voyelles_majuscules():
+    assert compter_voyelles("AEIOUY") == 6
+
+
+def test_compter_voyelles_chiffres_et_ponctuation():
+    assert compter_voyelles("123 !?") == 0
