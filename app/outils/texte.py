@@ -21,3 +21,10 @@ def compter_voyelles(texte: str) -> int:
         if caractere in "aeiouy":
             nombre += 1
     return nombre
+
+
+
+
+
+def inverser(texte: str) -> str:
+    return texte[::-1]
