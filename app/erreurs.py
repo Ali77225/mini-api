@@ -1,4 +1,4 @@
-"""Erreurs communes de l'API"""
+"""Module de centralisation des erreurs et constantes."""
 
 """Exceptions personnalisées de l'API."""
 
@@ -24,3 +24,7 @@ DEPASSEMENT_DE_LIMITE_MATH = (
     f"Limite dépassée, veuillez entrer un nombre <= {LIMITE_FACTORIELLE}"
 )
 PGCD_INDEFINI_MATH = "Le pgcd(0,0) n'existe pas"
+
+
+MONTANT_NEGATIF_FINANCE = "Le montant ne peut pas être négatif"
+DEVISE_NON_SUPPORTEE_FINANCE = "Devise non supportée"
