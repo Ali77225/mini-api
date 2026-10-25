@@ -2,7 +2,9 @@ from fastapi.testclient import TestClient
 
 from app.erreurs import (
     DEPASSEMENT_DE_LIMITE_MATH,
+    DEVISE_NON_SUPPORTEE_FINANCE,
     LIMITE_FACTORIELLE,
+    MONTANT_NEGATIF_FINANCE,
     NOMBRE_NEGATIF_MATH,
     PGCD_INDEFINI_MATH,
 )
@@ -15,6 +17,7 @@ def test_sante():
     r = client.get("/sante")
     assert r.status_code == 200
     assert r.json() == {"statut": "ok"}
+
 
 # Tests de la route factorielle
 def test_route_factorielle_de_5():
@@ -152,7 +155,6 @@ def test_route_est_palindrome_texte_absent():
     assert r.status_code == 422
 
 
-
 # Tests de la route compter_voyelles
 def test_route_compter_voyelles():
     r = client.get("/compter_voyelles", params={"texte": "Bonjour le monde"})
@@ -187,3 +189,32 @@ def test_route_inverser_texte_vide():
 def test_route_inverser_texte_absent():
     r = client.get("/inverser")
     assert r.status_code == 422
+
+
+def test_route_euro_devise_succes():
+    response = client.get("/euro-devise?montant=100&devise=USD")
+    assert response.status_code == 200
+    assert response.json() == {"montant": 100.0, "devise": "USD", "resultat": 108.0}
+
+
+def test_route_euro_devise_zero():
+    response = client.get("/euro-devise?montant=0&devise=USD")
+    assert response.status_code == 200
+    assert response.json() == {"montant": 0.0, "devise": "USD", "resultat": 0.0}
+
+
+def test_route_euro_devise_montant_negatif():
+    response = client.get("/euro-devise?montant=-10&devise=USD")
+    assert response.status_code == 400
+    assert response.json()["detail"] == MONTANT_NEGATIF_FINANCE
+
+
+def test_route_euro_devise_inconnue():
+    response = client.get("/euro-devise?montant=100&devise=XYZ")
+    assert response.status_code == 400
+    assert response.json()["detail"] == DEVISE_NON_SUPPORTEE_FINANCE
+
+
+def test_route_euro_devise_type_invalide():
+    response = client.get("/euro-devise?montant=abc&devise=USD")
+    assert response.status_code == 422

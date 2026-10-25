@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 
 from app.erreurs import MetierException
 from app.outils.conversion import celsius_fahrenheit, km_mile
+from app.outils.finance import euro_devise
 from app.outils.math import est_premier, factorielle, pgcd
 from app.outils.texte import compter_voyelles, est_palindrome, inverser
 
@@ -70,3 +71,15 @@ def route_compter_voyelles(texte: str):
 @app.get("/inverser")
 def route_inverser(texte: str):
     return {"texte": texte, "resultat": inverser(texte)}
+
+
+@app.get("/euro-devise")
+def route_euro_devise(montant: float, devise: str):
+    try:
+        return {
+            "montant": montant,
+            "devise": devise.upper(),
+            "resultat": euro_devise(montant, devise),
+        }
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
