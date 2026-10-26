@@ -36,14 +36,13 @@ pip install -r requirements.txt
 
 ## Lancement
 
-```bash
-uvicorn app.main:app --reload
-```
+   Lancement avec Docker (image publiée sur ghcr.io) :
 
-L'API est disponible sur http://127.0.0.1:8000.
-La documentation interactive, où toutes les routes sont testables depuis le navigateur, est sur http://127.0.0.1:8000/docs.
+   ```bash
+   docker run -p 8000:8000 ghcr.io/ali77225/mini-api:v1.0.0
+   ```
 
-Lancement avec Docker : section ajoutée lors de la publication de l'image (version v1.0.0).
+   L'API est alors disponible sur http://127.0.0.1:8000/docs.
 
 ## Tests
 
