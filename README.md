@@ -131,4 +131,4 @@ mini-api/
 | Ali | [@Ali77225](https://github.com/Ali77225) | Module math, module texte, README, déploiement |
 | Dieudonne | [@dicoretoune5-maker](https://github.com/dicoretoune5-maker) | Module conversion |
 
-L'équipe comptait trois membres au départ. Après le départ de l'un d'eux, Ali a repris le module texte, et le module validation n'a pas été réalisé.
+L'équipe comptait deux membres. Ali a réalisé les modules math et texte et Dieudonne à réalisé le module , et le module validation n'a pas été réalisé.
