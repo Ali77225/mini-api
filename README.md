@@ -36,13 +36,24 @@ pip install -r requirements.txt
 
 ## Lancement
 
-   Lancement avec Docker (image publiée sur ghcr.io) :
+### En local
 
-   ```bash
-   docker run -p 8000:8000 ghcr.io/ali77225/mini-api:v1.0.0
-   ```
+```bash
+uvicorn app.main:app --reload
+```
 
-   L'API est alors disponible sur http://127.0.0.1:8000/docs.
+L'API est disponible sur http://127.0.0.1:8000.
+La documentation interactive, où toutes les routes sont testables depuis le navigateur, est sur http://127.0.0.1:8000/docs.
+
+### Avec Docker
+
+Sans installer Python, avec l'image publiée sur ghcr.io (Docker Desktop doit être lancé) :
+
+```bash
+docker run -p 8000:8000 ghcr.io/ali77225/mini-api:v1.0.0
+```
+
+L'API est alors disponible sur http://127.0.0.1:8000/docs.
 
 ## Tests
 
@@ -92,7 +103,7 @@ Devises acceptées : USD, GBP, JPY, CHF.
 
 | Code | Quand |
 |---|---|
-| `400` | Valeur refusée par la règle de la fonction : nombre négatif pour factorielle, pgcd(0, 0), température sous le zéro absolu, devise inconnue… La réponse contient le message d'erreur. |
+| `400` | Valeur refusée par la règle de la fonction : nombre négatif pour factorielle, pgcd(0, 0), température sous le zéro absolu, distance négative, devise inconnue… Le message d'erreur est dans la clé `detail` (math, euros) ou `message` (celsius et km, via le gestionnaire global d'erreurs). |
 | `422` | Paramètre manquant ou du mauvais type (par exemple `/factorielle/abc`). Cette erreur est renvoyée automatiquement par FastAPI. |
 
 ## Structure du projet
@@ -100,25 +111,34 @@ Devises acceptées : USD, GBP, JPY, CHF.
 ```
 mini-api/
 ├── app/
-│   ├── main.py            # routes de l'API
-│   ├── erreurs.py         # messages d'erreur partagés
+│   ├── main.py              # routes de l'API
+│   ├── erreurs.py           # messages d'erreur partagés et exceptions
 │   └── outils/
-│       ├── math.py        # module math
-│       ├── texte.py       # module texte
-│       ├── conversion.py  # module conversion
-│       └── finance.py     # conversion euros vers devises
-├── tests/                 # un fichier de tests par module, et test_main.py pour les routes
+│       ├── math.py          # module math
+│       ├── texte.py         # module texte
+│       ├── conversion.py    # module conversion
+│       └── finance.py       # conversion euros vers devises
+├── tests/                   # un fichier de tests par module, et test_main.py pour les routes
 ├── .github/
-│   ├── workflows/ci.yml   # CI : ruff + pytest
+│   ├── workflows/
+│   │   ├── ci.yml           # CI : ruff + pytest à chaque push et pull request
+│   │   └── deploy.yml       # CD : publication de l'image Docker à chaque tag v*
 │   └── pull_request_template.md
+├── Dockerfile               # recette de l'image Docker
+├── .dockerignore
 └── requirements.txt
 ```
+
+## CI / CD
+
+- **CI** : à chaque push et à chaque pull request, GitHub Actions lance `ruff check .` et `pytest` (couverture minimum 80 %). Une pull request ne peut être fusionnée que si la CI est verte.
+- **CD** : quand un tag de version commençant par `v` est poussé (par exemple `v1.0.0`), le workflow Deploy construit l'image Docker et la publie sur ghcr.io sous le nom `ghcr.io/ali77225/mini-api:<version>`.
 
 ## Contribuer
 
 - **Issues** : une issue par fonction, avec sa règle (cas normaux, cas limites, erreurs) en commentaire.
 - **Branches** : `type/numéro-description`, créées depuis `main` à jour (exemple : `feat/10-est-palindrome`).
-- **Commits** : format `type(portée): description` (exemple : `feat(texte): ajoute la fonction inverser`). Types utilisés : `feat`, `test`, `fix`, `refactor`, `style`, `docs`.
+- **Commits** : format `type(portée): description` (exemple : `feat(texte): ajoute la fonction inverser`). Types utilisés : `feat`, `test`, `fix`, `refactor`, `style`, `docs`, `build`, `ci`.
 - **Pull requests** : jamais de push direct sur `main`. Chaque PR a une description Quoi / Pourquoi (`Closes #…`) / Comment tester, une CI verte et au moins une approbation.
 - **Revues** : des commentaires posés sur une ligne précise, avec un préfixe `Question`, `Suggestion` ou `Bloquant`.
 - **Fusion** : par merge commit. La branche est supprimée après la fusion.
@@ -130,4 +150,4 @@ mini-api/
 | Ali | [@Ali77225](https://github.com/Ali77225) | Module math, module texte, README, déploiement |
 | Dieudonne | [@dicoretoune5-maker](https://github.com/dicoretoune5-maker) | Module conversion |
 
-L'équipe comptait deux membres. Ali a réalisé les modules math et texte et Dieudonne a réalisé le module conversion , et le module validation n'a pas été réalisé.
+L'équipe comptait deux membres. Ali a réalisé les modules math et texte, Dieudonne a réalisé le module conversion, et le module validation n'a pas été réalisé.
